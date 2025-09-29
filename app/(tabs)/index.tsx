@@ -54,7 +54,7 @@ export default function HomeScreen() {
         />
 
         {/* Status Section */}
-        <StatusSection />
+        {/* <StatusSection /> */}
 
         {/* Main Control Cards */}
         <MainControlSection />
