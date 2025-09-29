@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -46,8 +47,9 @@ interface BottomNavigationProps {
 
 export function BottomNavigation({ activeIndex = 0, onTabPress }: BottomNavigationProps) {
   const tabs = [
-    { icon: 'home-outline' as const, label: 'Home' },
-    { icon: 'warning-outline' as const, label: 'Warning' },
+    { icon: 'home-outline' as const, label: 'Home', route: '/' as const },
+    { icon: 'warning-outline' as const, label: 'Alerts', route: '/alert' as const },
+    // { icon: 'settings-outline' as const, label: 'FCM Test', route: '/explore' as const },
   ];
 
   return (
@@ -71,7 +73,10 @@ export function BottomNavigation({ activeIndex = 0, onTabPress }: BottomNavigati
             icon={tab.icon}
             label={tab.label}
             isActive={activeIndex === index}
-            onPress={() => onTabPress?.(index)}
+            onPress={() => {
+              onTabPress?.(index);
+              router.push(tab.route);
+            }}
           />
         ))}
       </View>

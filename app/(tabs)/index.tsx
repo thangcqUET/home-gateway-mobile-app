@@ -4,8 +4,8 @@ import { PermissionsAndroid, Platform, View } from 'react-native';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { MainControlSection } from '@/components/control-card';
 import { SmartHomeBackground } from '@/components/smart-home-background';
-import { StatusSection } from '@/components/status-section';
 import { TopNavigation } from '@/components/top-navigation';
+import fcmService from '@/services/fcmService';
 
 export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState(0);
@@ -36,6 +36,23 @@ export default function HomeScreen() {
 
   useEffect(() => {
     requestNotificationPermission();
+    
+    // Initialize FCM service for all app states
+    fcmService.initialize().then(() => {
+      console.log('FCM service initialized');
+      
+      // Subscribe to general home automation topic
+      fcmService.subscribeToTopic('home_automation');
+      fcmService.subscribeToTopic('sensor_updates');
+      fcmService.subscribeToTopic('device_alerts');
+    }).catch((error) => {
+      console.error('FCM initialization failed:', error);
+    });
+
+    // Cleanup on unmount
+    return () => {
+      fcmService.cleanup();
+    };
   }, []);
 
   return (
