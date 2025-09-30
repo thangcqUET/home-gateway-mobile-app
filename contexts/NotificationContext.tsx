@@ -77,9 +77,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
     });
 
     // Subscribe to relevant topics
-    fcmService.subscribeToTopic('home_alerts');
-    fcmService.subscribeToTopic('device_notifications');
-    fcmService.subscribeToTopic('security_alerts');
+    // fcmService.subscribeToTopic('home_alerts');
+    // fcmService.subscribeToTopic('device_notifications');
+    // fcmService.subscribeToTopic('security_alerts');
 
     return () => {
       unsubscribeForeground();

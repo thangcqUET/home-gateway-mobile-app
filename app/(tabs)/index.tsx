@@ -42,9 +42,9 @@ export default function HomeScreen() {
       console.log('FCM service initialized');
       
       // Subscribe to general home automation topic
-      fcmService.subscribeToTopic('home_automation');
-      fcmService.subscribeToTopic('sensor_updates');
-      fcmService.subscribeToTopic('device_alerts');
+      // fcmService.subscribeToTopic('home_automation');
+      // fcmService.subscribeToTopic('sensor_updates');
+      // fcmService.subscribeToTopic('device_alerts');
     }).catch((error) => {
       console.error('FCM initialization failed:', error);
     });
