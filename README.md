@@ -79,6 +79,34 @@ dependencies {
 }
 ```
 
+## Updating demo hardcoded values
+
+This project ships with a few intentionally hardcoded demo values to make it easy to run locally. To adapt the demo to your own environment, edit the files below.
+
+1) `components/control-card.tsx`
+   - What to change: the initial sensor devices array in `MainControlSection`.
+   - Fields: `device_id`, `name`, `icon`, `unit`, `iconBackgroundColor`, `iconColor`, and the `data` initial values (`timestamp`, `id`, `value`).
+   - Location: edit the `useState<SensorDevice[]>([ ... ])` initializer near the top of `MainControlSection`.
+
+2) `services/mqttService.ts`
+   - What to change: MQTT connection defaults and topics.
+   - Fields: constructor defaults `brokerHost` (default `broker.hivemq.com`), `brokerPort` (default `8000`), `salt` (used to form the `clientId`), and `clientId` (optional override).
+   - Topics: update the hardcoded topic in `subscribeToDevices()` (currently `/home_1/devices`).
+
+3) `components/fcm-test-panel.tsx`
+   - What to change: demo FCM topic names used in the subscribe/unsubscribe examples (e.g., `'test_topic'`).
+
+4) `services/fcmService.ts`
+   - What to change: any example/commented `subscribeToTopic` calls and the navigation helpers (`navigateToScreen`, `navigateToDevice`) so they match your routing.
+
+5) `android/app/google-services.json`
+   - What to change: replace with the `google-services.json` file from your Firebase Android app (matching `applicationId`).
+
+Tips
+- Use `broker.hivemq.com` and topic `/home_1/devices` for quick public testing, or run your own Mosquitto/Hivemq server for a private setup.
+- For predictable MQTT behavior, set a stable `clientId` in `MQTTService` instead of relying on a random `salt` default.
+- Keep the MQTT/FCM message payload shapes consistent between your devices/backend and the example shapes in the app.
+
 ## Running the App
 
 ### Android Development
