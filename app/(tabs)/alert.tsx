@@ -4,6 +4,7 @@ import { TopNavigation } from '@/components/top-navigation';
 import { useNotifications } from '@/contexts/NotificationContext';
 import fcmService from '@/services/fcmService';
 import { Ionicons } from '@expo/vector-icons';
+import Clipboard from '@react-native-clipboard/clipboard';
 import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -29,8 +30,10 @@ export default function AlertScreen() {
             {
               text: 'Copy Token', 
               onPress: () => {
-                // In a real app, you'd copy to clipboard
-                console.log('FCM Token:', token);
+                Clipboard.setString(token);
+                console.log('FCM Token copied to clipboard:', token);
+                // Show a brief confirmation
+                Alert.alert('Copied!', 'FCM token copied to clipboard');
               }
             }
           ]

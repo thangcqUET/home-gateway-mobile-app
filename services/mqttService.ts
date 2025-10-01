@@ -24,23 +24,28 @@ export class MQTTService {
       try {
         // Create MQTT client for React Native (requires WebSocket path)
         this.client = new Client(this.brokerHost, this.brokerPort, this.clientId);
-        // console.log('MQTT Client created with ID:', this.clientId);
+        console.log('MQTT Client created with ID:', this.clientId);
+        console.log('Connecting to MQTT broker:', this.brokerHost, 'Port:', this.brokerPort);
+        
         // Set up connection options
         const connectOptions = {
           onSuccess: () => {
-            console.log('MQTT Connected successfully');
+            console.log('MQTT Connected successfully to', this.brokerHost);
             this.isConnected = true;
             this.subscribeToDevices();
             resolve();
           },
           onFailure: (error: any) => {
             console.error('MQTT Connection failed:', error);
+            console.error('Failed to connect to broker:', this.brokerHost, 'Port:', this.brokerPort);
+            console.error('Error details:', JSON.stringify(error, null, 2));
             this.isConnected = false;
             reject(error);
           },
           keepAliveInterval: 60,
           cleanSession: true,
           useSSL: false,
+          timeout: 10, // 10 seconds timeout
         };
 
         // Set up message handler
@@ -51,19 +56,27 @@ export class MQTTService {
         // Set up connection lost handler
         this.client.onConnectionLost = (responseObject: any) => {
           console.log('MQTT Connection lost:', responseObject.errorMessage);
+          console.log('Connection lost details:', JSON.stringify(responseObject, null, 2));
           this.isConnected = false;
+          
           // Auto-reconnect after 3 seconds
+          console.log('Attempting to reconnect in 3 seconds...');
           setTimeout(() => {
             if (!this.isConnected) {
-              this.connect();
+              console.log('Starting reconnection attempt...');
+              this.connect().catch(err => {
+                console.error('Reconnection failed:', err);
+              });
             }
           }, 3000);
         };
 
         // Connect to broker
+        console.log('Initiating MQTT connection with options:', JSON.stringify(connectOptions, null, 2));
         this.client.connect(connectOptions);
       } catch (error) {
         console.error('MQTT Connection error:', error);
+        console.error('Error creating MQTT client or connecting:', JSON.stringify(error, null, 2));
         reject(error);
       }
     });

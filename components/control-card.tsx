@@ -160,7 +160,7 @@ export function MainControlSection() {
   // Initialize sensors with default device configurations
   const [sensorDevices, setSensorDevices] = useState<SensorDevice[]>([
     {
-      device_id: "TEMP_001",
+      device_id: "temp1",
       name: "Living Room Temperature",
       icon: "thermometer-outline",
       unit: "°C",
@@ -168,33 +168,46 @@ export function MainControlSection() {
       iconColor: "#3b82f6",
       data: {
         timestamp: new Date().toISOString().replace('T', ' ').substring(0, 23),
-        id: "TEMP_001",
+        id: "temp1",
         value: 0
       }
     },
     {
-      device_id: "HUM_002", 
-      name: "Kitchen Humidity",
+      device_id: "humidity1", 
+      name: "Living room Humidity",
       icon: "water-outline",
       unit: "%RH",
       iconBackgroundColor: "#dcfce7",
       iconColor: "#16a34a",
       data: {
         timestamp: new Date().toISOString().replace('T', ' ').substring(0, 23),
-        id: "HUM_002",
+        id: "humidity1",
         value: 0
       }
     },
     {
-      device_id: "LIGHT_003",
-      name: "Bedroom Light Sensor",
+      device_id: "luminosity1",
+      name: "Living room Light Sensor",
       icon: "sunny-outline", 
       unit: "lux",
       iconBackgroundColor: "#fef3c7",
       iconColor: "#f59e0b",
       data: {
         timestamp: new Date().toISOString().replace('T', ' ').substring(0, 23),
-        id: "LIGHT_003",
+        id: "luminosity1",
+        value: 0
+      }
+    },
+    {
+      device_id: "motion1",
+      name: "Living room Motion Area Sensor",
+      icon: "walk-outline", 
+      unit: "",
+      iconBackgroundColor: "#fdf2f8",
+      iconColor: "#ec4899",
+      data: {
+        timestamp: new Date().toISOString().replace('T', ' ').substring(0, 23),
+        id: "motion1",
         value: 0
       }
     }
